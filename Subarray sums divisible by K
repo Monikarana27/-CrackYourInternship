@@ -1,0 +1,19 @@
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+        Map<Integer, Integer> modCount = new HashMap<>();
+        modCount.put(0, 1); // This handles cases where sum % k == 0 initially
+        
+        int sum = 0;
+        int count = 0;
+        
+        for (int num : nums) {
+            sum += num;
+            int mod = (sum % k + k) % k; // Normalize to handle negative sums
+            int occurrences = modCount.getOrDefault(mod, 0);
+            count += occurrences;
+            modCount.put(mod, occurrences + 1);
+        }
+        
+        return count;
+    }
+}
